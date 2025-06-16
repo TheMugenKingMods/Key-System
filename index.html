@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mugen Hyper V3</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle, #FFD700 0%, #B8860B 50%, #8B0000 100%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: auto;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            max-width: 500px;
+            width: 90%;
+            animation: fadeIn 1s ease-in-out;
+            margin: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #FFD700;
+            text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700;
+            margin-bottom: 20px;
+            animation: shine 4s linear infinite;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            margin: 10px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, #FFD700, #DAA520);
+            border: 2px solid #B22222;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+            transition: 0.4s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .subscribe-btn {
+            background: linear-gradient(45deg, #B22222, #8B0000);
+            border: 2px solid #FFD700;
+        }
+
+        .subscribe-btn:hover {
+            background: linear-gradient(45deg, #FFD700, #DAA520);
+            color: #B22222;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #FFD700;
+        }
+
+        .continue-btn {
+            display: none;
+        }
+
+        .continue-btn:hover {
+            color: #B22222;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #FFD700;
+        }
+
+        .credit-btn, .shame-btn {
+            background: linear-gradient(45deg, #FFD700, #DAA520);
+        }
+
+        .credit-btn:hover, .shame-btn:hover {
+            color: #B22222;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #FFD700;
+        }
+
+        .note, .credit, .shame-list {
+            display: none;
+            margin-top: 20px;
+            font-size: 1em;
+            line-height: 1.6;
+            color: #FFD700;
+            text-align: left;
+            padding: 15px;
+            border-left: 5px solid #B22222;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .shame-list {
+            max-height: 200px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #FFD700 #B22222;
+        }
+
+        .shame-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .shame-list::-webkit-scrollbar-track {
+            background: #B22222;
+        }
+
+        .shame-list::-webkit-scrollbar-thumb {
+            background: #FFD700;
+            border-radius: 4px;
+        }
+
+        .validity {
+            font-size: 0.9em;
+            color: #FFD700;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Efek Animasi */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shine {
+            0% { text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700; }
+            50% { text-shadow: 0 0 15px #FFD700, 0 0 25px #FFD700; }
+            100% { text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700; }
+        }
+
+        /* Partikel Emas yang Dioptimalkan */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #FFD700;
+            border-radius: 50%;
+            opacity: 0.7;
+            box-shadow: 0 0 8px #FFD700;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 0.7; }
+            100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .btn { font-size: 1em; padding: 12px 25px; }
+            .container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="container">
+        <h1>Welcome to TheMugenKing</h1>
+        <a href="https://youtube.com/@themugenking?si=xHcLhvJnGXWcE_ZG" target="_blank" class="btn subscribe-btn" onclick="showContinue()">Subscribe</a>
+        <a href="#" class="btn continue-btn" onclick="showNote()">Continue</a>
+        <a href="#" class="btn credit-btn" onclick="showCredit()">Credit</a>
+        <a href="#" class="btn shame-btn" onclick="showShameList()">Hall of Shame</a>
+        <div class="note" id="note">
+            <p><strong>Congratulations You Have Logged In</strong></p>
+            <p>You Have Subscribed To Our Channel</p>
+            <p>It Will Automatically Open Soon</p>
+            <p>It Will Automatically Add Your Username To Whitelist</p>
+            <p>If You Unsubscribe, We Will Delete Your Whitelist User</p>
+            <p>Note: Your Subscription Helps Us Create More Awesome Script</p>
+            <p class="validity">Valid Until: December 31, 3039</p>
+        </div>
+        <div class="credit" id="credit">
+            <p><strong>Credit:</strong></p>
+            <p>TheMugenKing</p>
+            <p>Subscribe TheMugenKing</p>
+            <p>ZR Team</p>
+            <p><strong>Feedback</strong></p>
+            <p>Script Not Working?<p>
+            <p>Contact Me In Discord: themugenking<p>
+        </div>
+        <div class="shame-list" id="shameList">
+            <p><strong>Hall of Shame</strong></p>
+            <ul>
+                <li>debetbebet</li>
+                <li>erickrmbl65</li>
+                <li>arcrider2012</li>
+                <li>darkgodnb</li>
+                <li>Sc1p7T3sTer</li>
+                <li>BersekerRokan</li>
+                <li>moonxzp</li>
+                <li>TheKeyMan</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk menampilkan tombol Continue
+        function showContinue() {
+            setTimeout(() => {
+                document.querySelector('.continue-btn').style.display = 'inline-block';
+            }, 1000);
+        }
+
+        // Fungsi untuk menampilkan Note
+        function showNote() {
+            document.querySelector('.note').style.display = 'block';
+            document.querySelector('.continue-btn').style.display = 'none';
+            document.querySelector('.subscribe-btn').style.display = 'none';
+        }
+
+        // Fungsi untuk menampilkan/menyembunyikan Credit
+        function showCredit() {
+            const credit = document.querySelector('.credit');
+            credit.style.display = credit.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Fungsi untuk menampilkan/menyembunyikan Hall of Shame List
+        function showShameList() {
+            const shameList = document.querySelector('.shame-list');
+            shameList.style.display = shameList.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Partikel Emas yang Dioptimalkan
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDuration = Math.random() * 2 + 4 + 's';
+            document.getElementById('particles').appendChild(particle);
+            setTimeout(() => particle.remove(), 6000);
+        }
+
+        // Kurangi jumlah partikel untuk mencegah lag
+        setInterval(createParticle, 400);
+    </script>
+</body>
+</html>
